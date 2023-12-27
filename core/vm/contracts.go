@@ -149,6 +149,14 @@ func init() {
 
 // ActivePrecompiles returns the precompiles enabled with the current configuration.
 func ActivePrecompiles(rules params.Rules) []common.Address {
+	defaults := activePrecompiles(rules)
+	precompiles := make([]common.Address, len(defaults)+len(ExtraPrecompiledAddresses))
+	copy(precompiles[:len(defaults)], defaults)
+	copy(precompiles[len(defaults):], ExtraPrecompiledAddresses)
+	return precompiles
+}
+
+func activePrecompiles(rules params.Rules) []common.Address {
 	switch {
 	case rules.IsCancun:
 		return PrecompiledAddressesCancun

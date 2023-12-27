@@ -165,6 +165,10 @@ func headerKey(number uint64, hash common.Hash) []byte {
 	return append(append(headerPrefix, encodeBlockNumber(number)...), hash.Bytes()...)
 }
 
+func HeaderKey(number uint64, hash common.Hash) []byte {
+	return headerKey(number, hash)
+}
+
 // headerTDKey = headerPrefix + num (uint64 big endian) + hash + headerTDSuffix
 func headerTDKey(number uint64, hash common.Hash) []byte {
 	return append(headerKey(number, hash), headerTDSuffix...)
@@ -251,6 +255,10 @@ func IsCodeKey(key []byte) (bool, []byte) {
 // configKey = configPrefix + hash
 func configKey(hash common.Hash) []byte {
 	return append(configPrefix, hash.Bytes()...)
+}
+
+func ConfigKey(hash common.Hash) []byte {
+	return configKey(hash)
 }
 
 // genesisStateSpecKey = genesisPrefix + hash
